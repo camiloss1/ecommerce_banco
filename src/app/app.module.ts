@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DefaultModule } from './UI/layouts/default/default.module';
+import { OutsideComponent } from './UI/layouts/outside/outside.component';
+import { OutsideModule } from './UI/layouts/outside/outside.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,8 @@ import { DefaultModule } from './UI/layouts/default/default.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DefaultModule
+    DefaultModule,
+    OutsideModule
   ],
   providers: [],
   bootstrap: [AppComponent]
