@@ -4,12 +4,14 @@ import { DefaultComponent } from './UI/layouts/default/default.component';
 import { OutsideComponent } from './UI/layouts/outside/outside.component';
 import { HomeComponent } from './UI/modules/home/home.component';
 import { LoginComponent } from './UI/modules/login/login.component';
+import { AuthGuard } from './UI/shared/guard/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/outside', pathMatch: 'full' },
   {
     path: '',
     component: DefaultComponent,
+    canActivate:[AuthGuard],
     children: [
       {
         path: 'home',

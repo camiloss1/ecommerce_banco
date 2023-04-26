@@ -14,20 +14,20 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) { }
   loginForm!: FormGroup;
-public ValidationMessages = {
-  email:[
-    {type: 'required',message:'Este campo es requerido'},
-    {type: 'pattern',message:'Este campo es de tipo email'}
-  ],
-  password:[
-    {type: 'required',message:'Este campo es requerido'},
-    {type: 'minlength',message:'Este campo es de minimo 6 caracteres'}
-  ]
-}
+  public ValidationMessages = {
+    email: [
+      { type: 'required', message: 'Este campo es requerido' },
+      { type: 'pattern', message: 'Este campo es de tipo email' }
+    ],
+    password: [
+      { type: 'required', message: 'Este campo es requerido' },
+      { type: 'minlength', message: 'Este campo es de minimo 6 caracteres' }
+    ]
+  }
 
-public get f() {
-  return this.loginForm.controls
-}
+  public get f() {
+    return this.loginForm.controls
+  }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -47,28 +47,27 @@ public get f() {
   }
 
   login() {
-    if(this.loginForm.valid)
-    {
+    if (this.loginForm.valid) {
       var email = this.loginForm.controls['email'].value;
       var password = this.loginForm.controls['password'].value;
       //llamado al servicio de login params(email,password)
       // token almacenar en localstorage, usuario informacion almacenarla en localstorage
-      localStorage.setItem('token',email+password);
-      var usuario = {'name': 'Juan'}
-      localStorage.setItem('usuario',JSON.stringify(usuario));
-this.router.navigate(['/home'])
-Swal.fire({
-  title:'Bienvenido!',
-  text:'Has iniciado sesión de manera exitosa',
-  icon:'success'
-})
+      localStorage.setItem('token', email + password);
+      var usuario = { 'name': 'Juan' }
+      localStorage.setItem('usuario', JSON.stringify(usuario));
+      this.router.navigate(['/home'])
+      Swal.fire({
+        title: 'Bienvenido!',
+        text: 'Has iniciado sesión de manera exitosa',
+        icon: 'success'
+      })
 
       return;
     }
     Swal.fire({
-      title:'Error!',
-      text:'Debes verificar los campos antes de continuar',
-      icon:'error'
+      title: 'Error!',
+      text: 'Debes verificar los campos antes de continuar',
+      icon: 'error'
     })
   }
 

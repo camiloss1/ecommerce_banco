@@ -1,3 +1,27 @@
-<div>
-    Cuerpo
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div *ngFor="let imagen of imagenes; let i = index">
+            <div [ngClass]="{'active' : imagen.active, 'opacity-25':imagen.stock == 0 }" class="carousel-item">
+                <img src="{{imagen.url}}" class="img-fluid d-block w-100" alt="...">
+                <div *ngIf="imagen.stock == 0" class="carousel-caption d-none d-md-block">
+                    <h5 class="text-danger">Producto no disponible</h5>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<div [ngSwitch]="opcionSeleccionada">
+<p *ngSwitchCase="'opcion1'">seleccionaste la opcion 1</p>
+<p *ngSwitchCase="'opcion2'">seleccionaste la opcion 2</p>
+<p *ngSwitchCase="'opcion3'">seleccionaste la opcion 3</p>
+<p *ngSwitchDefault>No seleecionaste una opcion valida</p>
 </div>
