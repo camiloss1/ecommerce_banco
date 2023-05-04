@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Userusecase } from 'src/app/domain/usecases/userusecase';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -11,7 +12,8 @@ import Swal from 'sweetalert2'
 export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private userUseCase: Userusecase
   ) { }
   loginForm!: FormGroup;
   public ValidationMessages = {
@@ -48,27 +50,43 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
+
       var email = this.loginForm.controls['email'].value;
       var password = this.loginForm.controls['password'].value;
       //llamado al servicio de login params(email,password)
+      var login = this.userUseCase.login(email, password).subscribe((data: any) => {
+        if (data) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('email', email);
+          this.router.navigate(['/home'])
+          Swal.fire({
+            title: 'Bienvenido!',
+            text: 'Has iniciado sesión de manera exitosa',
+            icon: 'success'
+          })
+          return;
+        }
+        else {
+          this.router.navigate(['/outside'])
+          Swal.fire({
+            title: 'Error!',
+            text: 'Verifica los datos de acceso',
+            icon: 'error'
+          })
+          return;
+        }
+      });
       // token almacenar en localstorage, usuario informacion almacenarla en localstorage
-      localStorage.setItem('token', email + password);
-      var usuario = { 'name': 'Juan' }
-      localStorage.setItem('usuario', JSON.stringify(usuario));
-      this.router.navigate(['/home'])
-      Swal.fire({
-        title: 'Bienvenido!',
-        text: 'Has iniciado sesión de manera exitosa',
-        icon: 'success'
-      })
 
-      return;
     }
-    Swal.fire({
-      title: 'Error!',
-      text: 'Debes verificar los campos antes de continuar',
-      icon: 'error'
-    })
+    else {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Debes verificar los campos antes de continuar',
+        icon: 'error'
+      })
+    }
+
   }
 
 
