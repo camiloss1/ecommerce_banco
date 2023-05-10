@@ -12,6 +12,6 @@ export class ProductsService implements ProductGateway {
   constructor( private genericService:GenericService) { }
   private _url = 'https://run.mocky.io';
   getProductImages(): Observable<any[]> {
-    return this.genericService.get<any[]>(this._url,'v3/b2456a53-4d33-4dd7-9e97-0ad0f3343c45');
+    return this.genericService.get<any[]>(this._url,'v3/f80ddc1f-401c-412a-ad9f-26386b6cd783');
   }
 }

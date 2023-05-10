@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -10,6 +10,7 @@ import { ProductsService } from './infraestructure/driven-adapter/services/produ
 import { UserService } from './infraestructure/driven-adapter/services/user.service';
 import { DefaultModule } from './UI/layouts/default/default.module';
 import { OutsideModule } from './UI/layouts/outside/outside.module';
+import { HelpersInterceptor } from './infraestructure/helpers.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,8 +23,10 @@ import { OutsideModule } from './UI/layouts/outside/outside.module';
     OutsideModule,
     HttpClientModule
   ],
-  providers: [{ provide: UserGateway, useClass: UserService },
-  { provide: ProductGateway, useClass: ProductsService },],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HelpersInterceptor, multi: true },
+    { provide: UserGateway, useClass: UserService },
+    { provide: ProductGateway, useClass: ProductsService },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
